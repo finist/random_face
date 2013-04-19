@@ -1,2 +1,3 @@
-random_face
+Random Face
 ===========
+http://finist.github.io/random_face/
