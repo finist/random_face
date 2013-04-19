@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the Paper.js library -->
+<script type="text/javascript" src="paper.js"></script>
+<!-- Define inlined PaperScript associate it with myCanvas -->
+<script type="text/paperscript" canvas="myCanvas">
+    // Create a Paper.js Path to draw a line into it:
+    // var path = new Path();
+    // // Give the stroke a color
+    // path.strokeColor = 'black';
+    // var start = new Point(100, 100);
+    // // Move to start and draw a line from there
+    // path.moveTo(start);
+    // // Note the plus operator on Point objects.
+    // // PaperScript does that for us, and much more!
+    // path.lineTo(start + [ 100, -50 ]);
+
+    // var path = new Path();
+    // path.strokeColor = 'black';
+    // path.add(new Point(30, 75)); 
+    // path.add(new Point(30, 25)); 
+    // path.add(new Point(80, 25));
+    // path.add(new Point(80, 75));
+    // path.closed = true;
+
+    // // Select the path, so we can see its handles:
+    // path.fullySelected = true;
+
+    // // Create a copy of the path and move it 100pt to the right:
+    // var copy = path.clone();
+    // copy.fullySelected = true;
+    // copy.position.x += 100;
+
+    // // Smooth the segments of the copy:
+    // copy.smooth();
+
+    var face = new Path();
+    var left_eye = new Path();
+    var right_eye = new Path();
+    var nose = new Path();
+    var mouth = new Path();
+    var hair = new Path();
+    var left_ear = new Path();
+    var right_ear = new Path();
+
+    face.strokeColor = 'black';
+    left_eye.strokeColor = 'black';
+    right_eye.strokeColor = 'black';
+    nose.strokeColor = 'black';
+    mouth.strokeColor = 'black';
+    hair.strokeColor = 'black';
+    left_ear.strokeColor = 'black';
+    right_ear.strokeColor = 'black';
+
+    var center_x = 200
+    var center_y = 200
+
+    var eye_radius = 7
+    var eye_random = 3
+    var eyes_gap_x = 10 + Math.floor((Math.random()*15)+1)
+    var eyes_gap_y = 10 + Math.floor((Math.random()*15)+1)
+
+    // Face
+    for (var i = 1; i < 720; i = i + 20) {        
+        x = (50 * Math.cos((Math.PI*i)/180) + center_x) + Math.random() * 3
+        y = 50 * Math.sin((Math.PI*i)/180) + center_y + Math.random() * 3
+        face.add(new Point(x, y));
+    }
+
+    face.closed = true;
+    face.smooth();
+
+    // Hair
+    for (var i = 11; i < 17; i++) {
+        rx = Math.random() * 15
+        ry = Math.random() * 15
+        hair.add(new Point(face.segments[i].point.x, face.segments[i].point.y))
+        hair.add(new Point(face.segments[i].point.x + rx, face.segments[i].point.y + ry))
+    }
+
+    hair.add(new Point(face.segments[17].point.x, face.segments[17].point.y))
+
+    hair.smooth();
+
+    // Left ear
+
+    left_ear.add(new Point(face.segments[10].point.x, face.segments[10].point.y))
+    left_ear.add(new Point(face.segments[8].point.x - 10, face.segments[8].point.y - 20))
+    left_ear.add(new Point(face.segments[8].point.x, face.segments[8].point.y))
+    left_ear.smooth();
+    
+    // Right ear
+
+    right_ear.add(new Point(face.segments[17].point.x, face.segments[17].point.y))
+    right_ear.add(new Point(face.segments[1].point.x + 10, face.segments[1].point.y - 20))
+    right_ear.add(new Point(face.segments[1].point.x, face.segments[1].point.y))
+    right_ear.smooth();
+
+    // Left eye
+    for (var i = 1; i < 360; i = i + 40) {
+        x = eye_radius * Math.cos((Math.PI*i)/180) + center_x - eyes_gap_x + Math.floor((Math.random()*eye_random)+1)
+        y = eye_radius * Math.sin((Math.PI*i)/180) + center_y - eyes_gap_y + Math.floor((Math.random()*eye_random)+1)
+        left_eye.add(new Point(x, y));
+    }
+    
+    left_eye.closed = true;
+    left_eye.smooth();
+
+    // Right eye
+    for (var i = 1; i < 360; i = i + 40) {
+        x = eye_radius * Math.cos((Math.PI*i)/180) + center_x + eyes_gap_x + Math.floor((Math.random()*eye_random)+1)
+        y = eye_radius * Math.sin((Math.PI*i)/180) + center_y - eyes_gap_y + Math.floor((Math.random()*eye_random)+1)
+        right_eye.add(new Point(x, y));
+    }
+    
+    right_eye.closed = true;
+    right_eye.smooth();
+
+    // Nose
+    nose.add(new Point(center_x - Math.floor((Math.random()*10)+1), center_y))
+    nose.add(new Point(center_x + Math.floor((Math.random()*10) * (Math.random() < 0.5 ? -1 : 1) ), center_y + Math.floor((Math.random()*10) + 1 )))
+    nose.add(new Point(center_x + Math.floor((Math.random()*10)+1), center_y))
+
+    nose.smooth();
+
+    // Mouth
+    mouth.add(new Point(center_x - Math.floor((Math.random()*20)+1) - 10, center_y + 20 ))
+    mouth.add(new Point(center_x, center_y + Math.floor((Math.random()*10)* (Math.random() < 0.5 ? -1 : 1)) + 20 ))
+    mouth.add(new Point(center_x + Math.floor((Math.random()*20)+1), center_y + 20))
+    mouth.add(new Point(center_x, center_y + Math.floor((Math.random()*10)* (Math.random() < 0.5 ? -1 : 1)) + 20 ))
+    mouth.add(new Point(center_x - Math.floor((Math.random()*20)+1) - 10, center_y + 20 ))
+
+    mouth.smooth();
+
+</script>
+</head>
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
