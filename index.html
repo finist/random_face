@@ -37,7 +37,7 @@
       var center_y = 70
 
       var eye_radius = 7
-      var eye_random = 3
+      var eye_random = 2
       var eyes_gap_x = 10 + Math.floor((Math.random()*15)+1)
       var eyes_gap_y = 10 + Math.floor((Math.random()*15)+1)
 
@@ -61,6 +61,7 @@
 
       hair.add(new Point(face.segments[17].point.x, face.segments[17].point.y))
 
+      // hair.fillColor = 'black'
       hair.smooth();
 
       // Left ear
@@ -97,6 +98,21 @@
       right_eye.closed = true;
       right_eye.smooth();
 
+      rpx = Math.random() * 3 * (Math.random() < 0.5 ? -1 : 1) + 1
+      rpy = Math.random() * 3 * (Math.random() < 0.5 ? -1 : 1) + 1
+      console.log(rpx)
+      console.log(rpy)
+
+      // Left pupil
+      var left_pupil = new Path.Circle(new Point(center_x - eyes_gap_x + rpx, center_y - eyes_gap_y + rpy), 3);
+      left_pupil.strokeColor = 'black';
+      left_pupil.fillColor = 'black'
+
+      // Right pupil
+      var right_pupil = new Path.Circle(new Point(center_x + eyes_gap_x + rpx, center_y - eyes_gap_y + rpy), 3);
+      right_pupil.strokeColor = 'black';
+      right_pupil.fillColor = 'black'
+
       // Nose
       nose.add(new Point(center_x - Math.floor((Math.random()*10)+1), center_y))
       nose.add(new Point(center_x + Math.floor((Math.random()*10) * (Math.random() < 0.5 ? -1 : 1) ), center_y + Math.floor((Math.random()*10) + 1 )))
@@ -111,6 +127,7 @@
       mouth.add(new Point(center_x, center_y + Math.floor((Math.random()*10)* (Math.random() < 0.5 ? -1 : 1)) + 20 ))
       mouth.add(new Point(center_x - Math.floor((Math.random()*20)+1) - 10, center_y + 20 ))
 
+      mouth.closed = true;
       mouth.smooth();
 
     </script>
